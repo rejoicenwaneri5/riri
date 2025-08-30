@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIRI - Online Bookstore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .cart-count {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: #ff4d4f;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 text-white p-4 sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">RIRI Bookstore</h1>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="hover:underline">Home</a>
+                <a href="#" class="hover:underline">Shop</a>
+                <a href="#" class="hover:underline">About</a>
+                <a href="#" class="relative">
+                    Cart
+                    <span id="cart-count" class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-blue-500 text-white py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Welcome to RIRI Bookstore</h2>
+            <p class="text-lg mb-6">Discover a world of stories with our curated collection of books!</p>
+            <a href="#products" class="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-200">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Product Listings -->
+    <section id="products" class="container mx-auto py-12">
+        <h2 class="text-3xl font-bold text-center mb-8">Our Books</h2>
+        <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Products will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 RIRI. All rights reserved.</p>
+            <div class="mt-4">
+                <a href="#" class="text-gray-400 hover:text-white mx-2">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white mx-2">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample book data
+        const books = [
+            { id: 1, title: "The Great Gatsby", author: "F. Scott Fitzgerald", price: 12.99, image:"Annotation 2025-08-14 090606.png"  },
+            { id: 2, title: "To Kill a Mockingbird", author: "Harper Lee", price: 14.99, image: "to kill a mockingbird.png" },
+            { id: 3, title: "1984", author: "George Orwell", price: 11.49, image: "1984.png" },
+            { id: 4, title: "Pride and Prejudice", author: "Jane Austen", price: 9.99, image: "pride and prejudice.png" },
+            { id: 5, title: "The Catcher in the Rye", author: "J.D. Salinger", price: 10.99, image: "the catcher in the rye.png" },
+            { id: 6, title: "Lord of the Rings", author: "J.R.R. Tolkien", price: 19.99, image: "lord of the rings.png" },
+            { id: 7, title: "The Hobbit", author: "J.R.R. Tolkien", price: 13.49, image: "the hobbit.png" },
+            { id: 8, title: "Brave New World", author: "Aldous Huxley", price: 12.49, image: "brave new world.png" }
+        ];
+
+        // Cart functionality
+        let cart = [];
+
+        function updateCartCount() {
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cart.length;
+        }
+
+        function addToCart(book) {
+            cart.push(book);
+            updateCartCount();
+            alert(`${book.title} has been added to your cart!`);
+        }
+
+        // Render products
+        function renderProducts() {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = '';
+            books.forEach(book => {
+                const productCard = `
+                    <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
+                        <img src="${book.image}" alt="Cover of ${book.title}" class="w-full h-40 sm:h-48 object-contain rounded-md mb-4 border-2 border-gray-200 hover:border-blue-500 transition duration-200">
+                        <h3 class="text-lg font-semibold">${book.title}</h3>
+                        <p class="text-gray-600">${book.author}</p>
+                        <p class="text-blue-600 font-bold mt-2">$${book.price.toFixed(2)}</p>
+                        <button onclick='addToCart(${JSON.stringify(book)})' 
+                                class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+                productList.innerHTML += productCard;
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
